@@ -1,0 +1,11 @@
+[Unit]
+Description=Daemon for monitoring the backupbox (bbx) status.
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/bin/bbxd
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
