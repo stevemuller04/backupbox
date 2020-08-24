@@ -104,6 +104,10 @@ func (this *Disk) Structure() error {
 		return err
 	} else if err := os.MkdirAll(this.mount + "/backup", 02770); err != nil {
 		return err
+	} else if err := os.Chmod(this.mount + "/live", 02770); err != nil { // in case directory exists already
+		return err
+	} else if err := os.Chmod(this.mount + "/backup", 02770); err != nil { // in case directory exists already
+		return err
 	} else if rootUser, err := user.Lookup("root"); err != nil {
 		return err
 	} else if rootGroup, err := user.LookupGroup("root"); err != nil {

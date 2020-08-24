@@ -12,7 +12,6 @@ double getDiskUsage(char *path) {
 		return -1.0;
 	}
 }
-
 */
 import "C"
 

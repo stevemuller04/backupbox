@@ -12,6 +12,7 @@ func NewStatusLed(pin int) (*StatusLed, error) {
 	opt := ws281x.DefaultOptions
 	opt.Channels[0].Brightness = 255
 	opt.Channels[0].LedCount = 1
+	opt.Channels[0].StripeType = ws281x.SK6812WStrip
 
 	if dev, err := ws281x.MakeWS2811(&opt); err != nil {
 		return nil, err
