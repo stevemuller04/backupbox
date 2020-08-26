@@ -54,7 +54,7 @@ func templateGetDiskUsage(directory string) string {
 	if usage, err := systemstatus.GetDiskUsage(directory); err != nil {
 		return "—%"
 	} else {
-		return fmt.Sprintf("%d%%", int(math.Round(usage)))
+		return fmt.Sprintf("%d%%", int(math.Round(usage * 100)))
 	}
 }
 
