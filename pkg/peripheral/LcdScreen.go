@@ -21,7 +21,7 @@ func NewLcdScreen(busName string) (*LcdScreen, error) {
 	opts := ssd1306.Opts {
 		W: 128,
 		H: 64,
-		Rotated: true,
+		Rotated: false,
 		Sequential: false,
 		SwapTopBottom: false,
 	}
