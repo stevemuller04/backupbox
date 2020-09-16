@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"math"
 	"time"
 	"path/filepath"
@@ -115,11 +116,13 @@ func handleCmd(cmd func() error) func(c *gin.Context) {
 }
 
 func cmdReboot() error {
-	return syscall.Reboot(syscall.LINUX_REBOOT_CMD_RESTART)
+	//return syscall.Reboot(syscall.LINUX_REBOOT_CMD_RESTART)
+	return exec.Command("/bin/systemctl", "reboot").Run()
 }
 
 func cmdShutdown() error {
-	return syscall.Reboot(syscall.LINUX_REBOOT_CMD_POWER_OFF)
+	//return syscall.Reboot(syscall.LINUX_REBOOT_CMD_POWER_OFF)
+	return exec.Command("/bin/systemctl", "poweroff").Run()
 }
 func cmdClean() error {
 	directory := "/mnt/usb/backup"
