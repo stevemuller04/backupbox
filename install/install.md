@@ -1,5 +1,7 @@
 ## Set up
 
+Execute as root (`sudo su`):
+
 ```bash
 passwd pi
 
@@ -9,10 +11,12 @@ sed -i 's/raspberrypi/backupbox/' /etc/hosts
 mkdir ~/.ssh
 chmod 0700 ~/.ssh
 echo $SSHKEY > ~/.ssh/authorized_keys
-chmod 0600 .ssh/authorized_keys
+chmod 0600 ~/.ssh/authorized_keys
 echo 'PasswordAuthentication no' >> /etc/ssh/sshd_config
 
 apt update && apt upgrade
+
+raspi-config # enable I2C at "Interface Options" → "I2C"
 ```
 
 ## Configure boot LED
@@ -135,6 +139,7 @@ systemctl enable rwprot.timer
 ## Install other dependencies
 
 * Copy `rwprot.sh`, `rot.sh` and `dirbak.sh` to `/usr/local/bin/`
+* Install dependencies:
 
 ```bash
 apt install git golang scons
@@ -142,10 +147,10 @@ apt install git golang scons
 cd && git clone https://github.com/jgarff/rpi_ws281x.git && cd rpi_ws281x && scons && cp *.a /lib && cp *.h /usr/local/include && cd && rm -r rpi_ws281x
 ```
 
-* Copy `bbx/` to `/usr/local/src/`
+* Install Backup Box software:
 
 ```bash
-git -c http.sslVerify=false clone https://intranet.octarine.lu/git/steve/backupbox-daemon.git /usr/local/src/bbx
+git -c http.sslVerify=false clone https://intranet.octarine.lu/git/steve/backupbox.git /usr/local/src/bbx
 cd /usr/local/src/bbx/
 make
 ln -s /usr/local/src/bbx/build/bbxd /usr/local/bin/bbxd
@@ -155,6 +160,8 @@ ln -s /usr/local/src/bbx/bbxweb.service /etc/systemd/system/bbxweb.service && sy
 ```
 
 ## Configure read-only file system
+
+/!\ **Warning:** The procedure in this section is experimental! Making the file system read-only causes many problems like services not starting correctly and NTP not working (see workaround below).
 
 * Add `fastboot noswap ro` to the end of the boot line in `/boot/cmdline.txt`
 * Add the option `,ro` to all block devices in `/etc/fstab`
