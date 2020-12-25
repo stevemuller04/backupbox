@@ -116,14 +116,23 @@ func handleCmd(cmd func() error) func(c *gin.Context) {
 }
 
 func cmdReboot() error {
-	//return syscall.Reboot(syscall.LINUX_REBOOT_CMD_RESTART)
-	return exec.Command("/bin/systemctl", "reboot").Run()
+	go func() {
+		time.Sleep(time.Second)
+		//syscall.Reboot(syscall.LINUX_REBOOT_CMD_RESTART)
+		exec.Command("/bin/systemctl", "reboot").Run()
+	}()
+	return nil
 }
 
 func cmdShutdown() error {
-	//return syscall.Reboot(syscall.LINUX_REBOOT_CMD_POWER_OFF)
-	return exec.Command("/bin/systemctl", "poweroff").Run()
+	go func() {
+		time.Sleep(time.Second)
+		//syscall.Reboot(syscall.LINUX_REBOOT_CMD_POWER_OFF)
+		exec.Command("/bin/systemctl", "poweroff").Run()
+	}()
+	return nil
 }
+
 func cmdClean() error {
 	directory := "/mnt/usb/backup"
 	dirs, _ := filepath.Glob(directory + "/*/*")
@@ -134,6 +143,7 @@ func cmdClean() error {
 	}
 	return nil
 }
+
 func cmdReset() error {
 	disk := backup.NewDisk("/dev/sda", "/dev/sda1", "/mnt/usb")
 	if err := disk.Format(); err != nil {
