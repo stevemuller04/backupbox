@@ -118,7 +118,6 @@ func handleCmd(cmd func() error) func(c *gin.Context) {
 func cmdReboot() error {
 	go func() {
 		time.Sleep(time.Second)
-		//syscall.Reboot(syscall.LINUX_REBOOT_CMD_RESTART)
 		exec.Command("/bin/systemctl", "reboot").Run()
 	}()
 	return nil
@@ -127,7 +126,6 @@ func cmdReboot() error {
 func cmdShutdown() error {
 	go func() {
 		time.Sleep(time.Second)
-		//syscall.Reboot(syscall.LINUX_REBOOT_CMD_POWER_OFF)
 		exec.Command("/bin/systemctl", "poweroff").Run()
 	}()
 	return nil
@@ -154,3 +152,4 @@ func cmdReset() error {
 		return nil
 	}
 }
+
