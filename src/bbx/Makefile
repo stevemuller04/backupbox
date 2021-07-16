@@ -16,5 +16,5 @@ clean:
 	rm -rf $(BUILDDIR)
 
 build:
-	$(GOBUILD) -o "$(BUILDDIR)/bbxd" "$(SOURCEDIR)/bbxd/..."
-	$(GOBUILD) -o "$(BUILDDIR)/bbxweb" "$(SOURCEDIR)/bbxweb/..."
+	$(GOBUILD) -o "$(BUILDDIR)/bbxdevd" "$(SOURCEDIR)/bbxdevd/..."
+	$(GOBUILD) -o "$(BUILDDIR)/bbxwebd" "$(SOURCEDIR)/bbxwebd/..."

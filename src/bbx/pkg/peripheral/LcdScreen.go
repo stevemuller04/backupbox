@@ -32,6 +32,7 @@ func NewLcdScreen(busName string) (*LcdScreen, error) {
 	} else {
 		s := LcdScreen { bus, dev, nil }
 		s.reset()
+		s.Render()
 		return &s, nil
 	}
 }

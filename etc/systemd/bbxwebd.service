@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/local/bin/bbxweb
+ExecStart=/usr/local/bin/bbxwebd
 Restart=always
 WorkingDirectory=/usr/local/src/bbx/
 Environment=GIN_MODE=release

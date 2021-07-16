@@ -17,7 +17,11 @@ import (
 
 const (
 	InternalDiskPath = "/"
-	ExternalDiskPath = "/mnt/usb"
+	ExternalDiskPath = "/mnt/bbx-disk"
+	BackupStoragePath = ExternalDiskPath + "/live"
+	SnapshotStoragePath = ExternalDiskPath + "/backup"
+	ExternalDiskDevice = "/dev/sda"
+	ExternalDiskDevicePartition = ExternalDiskDevice + "1"
 )
 
 func main() {
@@ -30,8 +34,8 @@ func main() {
 			"uptime": templateGetUptime(),
 			"usage_internal": templateGetDiskUsage(InternalDiskPath),
 			"usage_external": templateGetDiskUsage(ExternalDiskPath),
-			"backups": templateGetBackups("/mnt/usb/live/"),
-			"snapshots": templateGetSnapshots("/mnt/usb/backup/"),
+			"backups": templateGetBackups(BackupStoragePath),
+			"snapshots": templateGetSnapshots(SnapshotStoragePath),
 		})
 	})
 	r.POST("/reboot", handleCmd(cmdReboot))
@@ -132,8 +136,7 @@ func cmdShutdown() error {
 }
 
 func cmdClean() error {
-	directory := "/mnt/usb/backup"
-	dirs, _ := filepath.Glob(directory + "/*/*")
+	dirs, _ := filepath.Glob(SnapshotStoragePath + "/*/*")
 	for _, dir := range dirs {
 		if err := os.RemoveAll(dir); err != nil {
 			return err
@@ -143,7 +146,7 @@ func cmdClean() error {
 }
 
 func cmdReset() error {
-	disk := backup.NewDisk("/dev/sda", "/dev/sda1", "/mnt/usb")
+	disk := backup.NewDisk(ExternalDiskDevice, ExternalDiskDevicePartition, ExternalDiskPath)
 	if err := disk.Format(); err != nil {
 		return err
 	} else if err := disk.Structure(); err != nil {

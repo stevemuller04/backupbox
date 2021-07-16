@@ -14,6 +14,11 @@ import (
 	"bbx/pkg/systemstatus/esedb"
 )
 
+const (
+	ExternalDiskPath = "/mnt/bbx-disk"
+	BackupStoragePath = ExternalDiskPath + "/live"
+)
+
 func main() {
 	peripheral.Init()
 	s, _ := peripheral.NewLcdScreen("")
@@ -29,7 +34,7 @@ func main() {
 	}()
 
 	for {
-		if lastBackup, err := getLastBackupTime("/mnt/usb/live/"); err != nil {
+		if lastBackup, err := getLastBackupTime(BackupStoragePath); err != nil {
 			s.DrawText("No backup!", 0, 0)
 			red(l)
 		} else {
@@ -43,7 +48,7 @@ func main() {
 			}
 		}
 
-		if du, err := systemstatus.GetDiskUsage("/mnt/usb"); err != nil {
+		if du, err := systemstatus.GetDiskUsage(ExternalDiskPath); err != nil {
 			s.DrawText("Disk: --%", 0, 40)
 		} else {
 			s.DrawText(fmt.Sprintf("Disk: %d%%", int32(math.Round(du * 100))), 0, 40)

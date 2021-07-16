@@ -1,0 +1,8 @@
+[Unit]
+Description=Execute ransomware protection on /mnt/bbx-disk
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/bin/rwprot "/mnt/bbx-disk/live" "/mnt/bbx-disk/backup"
+User=root
+Group=root

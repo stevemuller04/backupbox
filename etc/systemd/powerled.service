@@ -1,0 +1,11 @@
+[Unit]
+Description=Turn Power LED on when boot completed
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/bin/echo "default-on"
+StandardOutput=append:/sys/class/leds/led0/trigger
+
+[Install]
+WantedBy=multi-user.target

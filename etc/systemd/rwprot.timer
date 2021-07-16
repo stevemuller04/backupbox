@@ -1,0 +1,8 @@
+[Unit]
+Description=Run ransomware protection once per night
+
+[Timer]
+OnCalendar=*-*-* 4:00:00
+
+[Install]
+WantedBy=timers.target
