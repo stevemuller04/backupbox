@@ -2,6 +2,7 @@
 
 BINDIR=$(realpath bin)
 BBXDIR=$(realpath src/bbx)
+WWWDIR=$(realpath src/bbx/web)
 SERVICESDIR=$(realpath etc/systemd)
 
 # ----------------------------------------------------------------------
@@ -15,6 +16,9 @@ ln -s "$BINDIR/rot" /usr/local/bin/rot
 ln -s "$BINDIR/rwprot" /usr/local/bin/rwprot
 ln -s "$BBXDIR/build/bbxwebd" /usr/local/bin/bbxwebd
 ln -s "$BBXDIR/build/bbxdevd" /usr/local/bin/bbxdevd
+
+mkdir -p /var/www
+ln -s "$WWWDIR" /var/www/bbx
 
 mkdir -p /etc/systemd/system
 ln -s "$SERVICESDIR/bbxdevd.service" /etc/systemd/system/bbxdevd.service

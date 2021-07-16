@@ -49,4 +49,3 @@ function UI(modalSelector, backupbox) {
 		modal.then(function() { backupbox.reset().then(ok, error); }, ignore);
 	};
 }
-

@@ -26,9 +26,9 @@ const (
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLGlob("./web/templates/*")
-	r.Static("/css", "./web/css")
-	r.Static("/js", "./web/js")
+	r.LoadHTMLGlob("./templates/*")
+	r.Static("/css", "./css")
+	r.Static("/js", "./js")
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index.html", gin.H{
 			"uptime": templateGetUptime(),
