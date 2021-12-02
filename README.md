@@ -11,6 +11,8 @@ TODO
 Make sure that the I2C interface is enabled:
 ```bash
 raspi-config # enable I2C at "Interface Options" → "I2C"
+# this may work:
+raspi-config nonint do_i2c 0
 ```
 
 Make sure that the Raspberry Pi has the desired hostname by editing the following files accordingly:
